@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,7 +52,8 @@ public class IndexController {
 	
 	//@PostAuthorize("hasRole('ROLE_MANAGER')")
 	//@PreAuthorize("hasRole('ROLE_MANAGER')")
-	@Secured("ROLE_MANAGER")
+	@Secured("ROLE_MANAGER") // 권한이 있는 사람만 접근 가능
+	//@PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_MANAGER')") // 두 가지 이상의 권한 설정
 	@GetMapping("/manager")
 	public @ResponseBody String manager() {
 		return "매니저 페이지입니다.";

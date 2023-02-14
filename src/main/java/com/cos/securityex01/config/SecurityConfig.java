@@ -13,7 +13,8 @@ import com.cos.securityex01.config.oauth.PrincipalOauth2UserService;
 
 @Configuration // IoC 빈(bean)을 등록
 @EnableWebSecurity // 필터 체인 관리 시작 어노테이션, 스프링 시큐리티 필터가 필터 체인에 등록된다.
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 특정 주소 접근시 권한 및 인증을 위한 어노테이션 활성화, secured 어노테이션 활성화
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+// 특정 주소 접근시 권한 및 인증을 위한 어노테이션 활성화, secured 어노테이션 활성화, preAuthorize, prePost 어노테이션 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
