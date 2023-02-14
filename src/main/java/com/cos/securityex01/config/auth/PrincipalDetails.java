@@ -13,10 +13,15 @@ import com.cos.securityex01.model.User;
 import lombok.Data;
 
 // Authentication 객체에 저장할 수 있는 유일한 타입
+// 로그인 진행이 완료되면 시큐리티 세션을 만들어준다. Security ContextHolder
+// 오브젝트 타입 => Authentication 타입 객체
+// Authentication 안에 User 정보가 있어야 됨
+// User 오브젝트타입 => UserDetails 타입 객체
+// Security Session => Authentication => UserDetails
 public class PrincipalDetails implements UserDetails, OAuth2User{
 
 	private static final long serialVersionUID = 1L;
-	private User user;
+	private User user; // 콤포지션
 	private Map<String, Object> attributes;
 
 	// 일반 시큐리티 로그인시 사용
@@ -54,16 +59,20 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 		return true;
 	}
 
+	// 비밀번호의 기간이 지났니? 오래 사용한 거 아니니?
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
+	// 휴면계정과 같아진다면 false
 	@Override
 	public boolean isEnabled() {
 		return true;
 	}
-	
+
+
+	// 해당 유저의 권한 즉, 인가를 리턴하는 곳
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collet = new ArrayList<GrantedAuthority>();
