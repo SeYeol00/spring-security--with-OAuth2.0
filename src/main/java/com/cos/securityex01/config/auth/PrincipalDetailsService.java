@@ -12,6 +12,7 @@ import com.cos.securityex01.repository.UserRepository;
 
 // 시큐리티 설정에 loginProcessingUrl("/login");
 // /login 요청이 오면 자동으로 UserDetailsService IoC 되어 있는 loadUserByUsername 함수가 실행이 된다.
+// 함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
 @Service
 public class PrincipalDetailsService implements UserDetailsService{
 

@@ -5,9 +5,11 @@ import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +46,29 @@ public class IndexController {
 
 		return "유저 페이지입니다.";
 	}
+
+	@GetMapping("/test/login")
+	public @ResponseBody String testLogin(
+			Authentication authentication,
+			@AuthenticationPrincipal PrincipalDetails userDetails // 의존성 주입
+	){
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		System.out.println(principalDetails.getUser());
+		return "OAuth 세션 정보 확힌하기";
+
+	}
+
+	@GetMapping("/test/oauth/login")
+	public @ResponseBody String testOAuth(
+			Authentication authentication,
+			@AuthenticationPrincipal OAuth2User oauth // 의존성 주입
+	){
+		OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+		System.out.println(oAuth2User.getAttributes());
+		return "OAuth 세션 정보 확힌하기";
+
+	}
+
 
 	@GetMapping("/admin")
 	public @ResponseBody String admin() {

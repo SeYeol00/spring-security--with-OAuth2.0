@@ -52,8 +52,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.defaultSuccessUrl("/") // 로그인이 완료되면 리다이렉트되는 주소
 		.and()
 			.oauth2Login()
-			.loginPage("/login")
+			.loginPage("/login") // 로그인 페이지 url을 넣어야 리다이렉트된다.
+
+				// 구글로그인이 완료된 뒤의 후처리
+				// 1. 코드 받기(인증)
+				// 2. 엑세스 토큰(권한,인가)
+				// 3. 사용자 프로필 정보를 가져오고
+				// 4. 그 정보를 토대로 회원가입을 자동으로 진행시킴
+				// 4 - 2. 부족한 정보면
+				// Tip. 코드X, (엑세스 토큰 + 사용자 프로필 정보 O)
 			.userInfoEndpoint()
+				// 타입이 OAUth2 유저 서비스가 되어야한다. 인터페이스가 따로 있다.
 			.userService(principalOauth2UserService);
 	}
 }

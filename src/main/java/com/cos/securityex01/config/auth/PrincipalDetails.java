@@ -18,6 +18,7 @@ import lombok.Data;
 // Authentication 안에 User 정보가 있어야 됨
 // User 오브젝트타입 => UserDetails 타입 객체
 // Security Session => Authentication => UserDetails
+// 두 가지를 상속받아 사용한다.
 public class PrincipalDetails implements UserDetails, OAuth2User{
 
 	private static final long serialVersionUID = 1L;
@@ -86,7 +87,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 		return attributes;
 	}
 
-	// User의 PrimaryKey
+	// User의 PrimaryKey, 거의 쓰지도 않는다.
 	@Override
 	public String getName() {
 		return user.getId()+"";

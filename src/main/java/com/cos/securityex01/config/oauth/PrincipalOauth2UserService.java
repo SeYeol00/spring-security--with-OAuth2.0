@@ -18,6 +18,8 @@ import com.cos.securityex01.config.oauth.provider.OAuth2UserInfo;
 import com.cos.securityex01.model.User;
 import com.cos.securityex01.repository.UserRepository;
 
+
+//												OAuth2를 사용하기 위한 기본 타입
 @Service
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
@@ -25,15 +27,24 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 	private UserRepository userRepository;
 
 	// userRequest 는 code를 받아서 accessToken을 응답 받은 객체
+	// 구글로 부터 받은 userRequest 데이터에 대한 후처리되는 함수
+	// 함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		OAuth2User oAuth2User = super.loadUser(userRequest); // google의 회원 프로필 조회
 
-		// code를 통해 구성한 정보
+		// code를 통해 구성한 정보, registrationId로 어떤 OAuth로 로그인하는지 알 수 있다.
 		System.out.println("userRequest clientRegistration : " + userRequest.getClientRegistration());
 		// token을 통해 응답받은 회원정보
 		System.out.println("oAuth2User : " + oAuth2User);
-	
+		// registrationId로 어떤 OAuth로 로그인하는지 알 수 있다.
+		System.out.println(userRequest.getClientRegistration());
+		// 구글 로그인 버튼 클릭 -> 구글 로그인창 -> 로그인을 완료 -> 코드로 리턴(OAuth - client 라이브러리 -> AccessToken요청)
+		System.out.println(userRequest.getAccessToken());
+		// userRequest 정보 -> loadUser 함수 호출 -> 구글로부터 회원 프로필을 받아준다.
+		System.out.println(userRequest.getAccessToken());
+
+
 		return processOAuth2User(userRequest, oAuth2User);
 	}
 

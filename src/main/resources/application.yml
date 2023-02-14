@@ -31,9 +31,10 @@ spring:
       client:
         registration:
           google: # /oauth2/authorization/google 이 주소를 동작하게 한다.
-            client-id: 머시기
-            client-secret: 머시기
-            scope:
+            # localhost:8080/oauth2/authorization/google 이 주소로 가야된다.
+            client-id: 여기에 구글 gcp 클라이언트 아이디
+            client-secret: 여기에 구글 gcp 클라이언트 비밀번호
+            scope: # 이메일이랑 프로필을 가져오겠다. 여기에 오픈 아이디도 있다.
             - email
             - profile
             
